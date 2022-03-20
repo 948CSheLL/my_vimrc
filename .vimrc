@@ -28,6 +28,12 @@ Plugin 'ycm-core/YouCompleteMe'
 " my algorithm plugin
 Plugin '948CSheLL/gen_common_code'
 
+" 产生YCM 的.ycm_extra_conf.py 文件
+Plugin 'rdnetto/YCM-Generator'
+
+" 在缓冲区和标签之间快速移动
+Plugin 'tpope/vim-unimpaired'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -35,6 +41,132 @@ filetype plugin indent on    " required
 " }}}
 
 " plugin config ----------------------------------------------- {{{
+
+" ycm-core/YouCompleteMe
+
+" 配置全局.ycm_extra_conf.py 文件路径
+" 通常，YCM 会在.ycm_extra_conf.py文件中搜索编译标志
+" 此选项指定配置文件的后备路径，如果找不到，则
+" 使用该路径.ycm_extra_conf.py。
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+" 当此选项设置为1时，YCM 将询问每个.ycm_extra_conf.py文件是否可以安全加载。
+let g:ycm_confirm_extra_conf = 0
+" This option is a list that may contain several globbing patterns. If a
+" pattern starts with a ! all .ycm_extra_conf.py files matching that
+" pattern will be blacklisted, that is they won't be loaded and no
+" confirmation dialog will be shown. If a pattern does not start with a !
+" all files matching that pattern will be whitelisted. Note that this
+" option is not used when confirmation is disabled using g:
+" ycm_confirm_extra_conf and that items earlier in the list will take
+" precedence over the later ones.
+"
+" Rules:
+" * matches everything
+" ? matches any single character
+" [seq] matches any character in seq
+" [!seq] matches any char not in seq
+" 这个变量必须在let g:ycm_confirm_extra_conf = 1 时才能用。
+" example: let g:ycm_extra_conf_globlist = ['~/dev/*','!~/*']
+
+
+" 强制语法刷新
+nnoremap <silent> <Leader>yfc :YcmForceCompileAndDiagnostics<CR>
+" 配置查看YouCompleteMe debug information
+nnoremap <silent> <Leader>ydi :<C-u>YcmDebugInfo<CR>
+" 重启YCM 服务
+nnoremap <silent> <Leader>yrs :<C-u>YcmRestartServer<CR>
+" 现实YCM 语法诊断的信息
+nnoremap <silent> <Leader>ydl :<C-u>YcmDiags<CR>
+" log 开关
+nnoremap <silent> <Leader>ytl :YcmToggleLogs<CR>
+" Looks up the current line for a header and jumps to it.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda
+nnoremap <leader>gi :<C-u>YcmCompleter GoToInclude<CR>
+" Looks up the symbol under the cursor and jumps to its declaration.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, cs, go, java,
+" javascript, python, rust, typescript
+nnoremap <leader>gdc :<C-u>YcmCompleter GoToDeclaration<CR>
+" Looks up the symbol under the cursor and jumps to its definition.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, cs, go, java,
+" javascript, python, rust, typescript
+nnoremap <leader>gdf :<C-u>YcmCompleter GoToDefinition<CR>
+" This command tries to perform the "most sensible" GoTo operation it can.
+" Currently, this means that it tries to look up the symbol under the
+" cursor and jumps to its definition if possible; if the definition is not
+" accessible from the current translation unit, jumps to the symbol's
+" declaration. For C-family languages, it first tries to look up the
+" current line for a header and jump to it. For C#, implementations are
+" also considered and preferred.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, cs, go, java,
+" javascript, python, rust, typescript
+nnoremap <leader>gt :<C-u>YcmCompleter GoTo<CR>
+" This command attempts to find all of the references within the project to
+" the identifier under the cursor and populates the quickfix list with
+" those locations.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, java, javascript,
+" python, typescript, rust
+nnoremap <leader>gr :<C-u>YcmCompleter GoToReferences<CR>
+" Provides a list of symbols in current document, in the quickfix list. See
+" also interactive symbol search.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, go, java, rust
+nnoremap <leader>gd :<C-u>YcmCompleter GoToDocumentOutline<CR>
+" This command formats the whole buffer or some part of it according to the
+" value of the Vim options shiftwidth and expandtab (see :h 'sw' and :h et
+" respectively). To format a specific part of your document, you can either
+" select it in one of Vim's visual modes (see :h visual-use) and run the
+" command or directly enter the range on the command line, e.g. :2,
+" 5YcmCompleter Format to format it from line 2 to line 5.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, java, javascript, go,
+" typescript, rust, cs
+" 这个Format 相当的难用，怎么更改shiftwidth 缩进都是2
+" vnoremap <leader>fm :<C-u>'<,'>YcmCompleter Format <CR>
+" Where available, attempts to make changes to the buffer to correct
+" diagnostics on the current line. Where multiple suggestions are available
+" (such as when there are multiple ways to resolve a given warning, or
+" where multiple diagnostics are reported for the current line), the
+" options are presented and one can be selected.
+" Completers which provide diagnostics may also provide trivial
+" modifications to the source in order to correct the diagnostic. Examples
+" include syntax errors such as missing trailing semi-colons, spurious
+" characters, or other errors which the semantic engine can
+" deterministically suggest corrections.
+" If no fix-it is available for the current line, or there is no diagnostic
+" on the current line, this command has no effect on the current buffer. If
+" any modifications are made, the number of changes made to the buffer is
+" echo'd and the user may use the editor's undo command to revert.
+" When a diagnostic is available, and g:ycm_echo_current_diagnostic is set
+" to 1, then the text (FixIt) is appended to the echo'd diagnostic when the
+" completer is able to add this indication. The text (FixIt available) is
+" also appended to the diagnostic text in the output of the :YcmDiags
+" command for any diagnostics with available fix-its (where the completer
+" can provide this indication).
+" NOTE: Causes re-parsing of the current translation unit.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, cs, go, java,
+" javascript, rust, typescript
+nnoremap <leader>fi :<C-u>YcmCompleter FixIt<CR>
+" In supported file types, this command attempts to perform a semantic
+" rename of the identifier under the cursor. This includes renaming
+" declarations, definitions and usages of the identifier, or any other
+" language-appropriate action. The specific behavior is defined by the
+" semantic engine in use.
+" Similar to FixIt, this command applies automatic modifications to your
+" source files. Rename operations may involve changes to multiple files,
+" which may or may not be open in Vim buffers at the time. YouCompleteMe
+" handles all of this for you. The behavior is described in the following
+" section.
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, java, javascript,
+" python, typescript, rust, cs
+" 这个暂时用不了，报错
+nnoremap <leader>rn :<C-u>execute 'YcmCompleter RefactorRename '.input('refactor "'.expand('<cword>').'" to:')<CR>
+" 回显光标下的变量或方法的类型，以及不同的派生类型。
+nnoremap <leader>tp :<C-u>YcmCompleter GetType<CR>
+
+
+" rdnetto/YCM-Generator
+" 配置生成.ycm_extra_conf.py 的命令
+" 经过测试这个不好用，可以寻找ycmd 给出的样例进行相应更改
+" find /path/to/YCM/ | grep '.ycm_extra_conf.py'
+nnoremap <silent> <Leader>yec :<C-u>YcmGenerateConfig<CR>
 
 " }}}
 
@@ -79,13 +211,13 @@ endfunction
 " variables ------------------------------------------------- {{{
 
 " 设置先导建
-let mapleader = 'g'
+let mapleader = '\'
 
 " 设置本地先导建，通常应用于filetype
 " plugin中的map，尽量与mapleader的取值不相同。
 " 这个localleader一般是用于类似于这样的映射中 [nnoremap <buffer> Q
 " x]，这种映射只有在执行的缓冲区内才能够使用，其他缓冲区不能使用该映射。
-let maplocalleader = '\'
+let maplocalleader = 'g'
 
 
 " }}}
@@ -205,9 +337,9 @@ nnoremap <C-j> <C-w><C-j>
 nnoremap <C-l> <C-w><C-l>
 
 " 设置在normal model下按 <Leader>ev 键，快速打开.vimrc。
-nnoremap <Leader>ev :vsplit $MYVIMRC<CR>g
+nnoremap <silent> <Leader>ev :vsplit $MYVIMRC<CR>
 " 设置在normal model下按 <Leader>sv 键，使得新编辑的.vimrc文件生效。
-nnoremap <Leader>sv :source $MYVIMRC<CR>g
+nnoremap <silent> <Leader>sv :source $MYVIMRC<CR>
 
 " 在插入模式下按 Esc、ctrl+c、ctrl+[ 键都可以退出insert model。
 " 设置 Esc 快捷键，用 jk 键在insert model下map Esc键。
@@ -271,3 +403,5 @@ augroup filetype_c_cpp
 augroup END
 
 " }}}
+
+echo '.vimrc sourced'
