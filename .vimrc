@@ -22,6 +22,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" 括号自动补全
+Plugin 'jiangmiao/auto-pairs'
+
 " youcompleteme
 Plugin 'ycm-core/YouCompleteMe'
 
@@ -325,7 +328,7 @@ nnoremap <silent> <localleader>p
       \ <C-w>:sleep 200m<CR>git commit -m "modify <C-w>"#"<CR>
       \ <C-w>:sleep 200m<CR>git push -u origin main<CR>
       \ <C-w>:sleep 5<CR>2418942810@qq.com<CR>
-      \ <C-w>:sleep 5<CR>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<CR>
+      \ <C-w>:sleep 5<CR>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<CR>
 
 " 对选择一个单词的命令 viw 进行map。
 nnoremap <space> viw
