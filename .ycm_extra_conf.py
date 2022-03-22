@@ -48,6 +48,8 @@ flags = [
 '../../include',
 '-isystem',
 '/home/duoyun/apue.3e/include',
+'-isystem',
+'/usr/include/unittest/include'
 ]
 
 
