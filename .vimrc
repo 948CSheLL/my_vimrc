@@ -37,6 +37,9 @@ Plugin 'rdnetto/YCM-Generator'
 " 在缓冲区和标签之间快速移动
 Plugin 'tpope/vim-unimpaired'
 
+" 配置vim debugger
+Plugin 'puremourning/vimspector'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -44,6 +47,34 @@ filetype plugin indent on    " required
 " }}}
 
 " plugin config ----------------------------------------------- {{{
+
+" gen_common_code configuration
+
+augroup plugin_gen_common_code
+  autocmd!
+  autocmd FileType c,cpp,python,java 
+	\ nmap <silent> <F5> <Plug>gen_algorithmExchangeAlgorithmPath
+  autocmd FileType c,cpp,python,java 
+	\ imap <silent> <F5> <ESC><Plug>gen_algorithmExchangeAlgorithmPath
+  autocmd FileType c,cpp,python,java 
+	\ nmap <silent> <F8> <Plug>gen_algorithmBackToLastPos
+  autocmd FileType c,cpp,python,java 
+	\ imap <silent> <F8> <ESC><Plug>gen_algorithmBackToLastPos
+  autocmd FileType c,cpp,python,java 
+	\ nmap <silent> <F6> <Plug>gen_algorithmFindFile
+  autocmd FileType c,cpp,python,java 
+	\ imap <silent> <F6> <ESC><Plug>gen_algorithmFindFile
+  autocmd FileType c,cpp,python,java 
+	\ imap <silent> <F7> <Plug>gen_algorithmReleaseKeyBoard<ESC>
+  autocmd FileType c,cpp,python,java 
+	\ nmap <silent> <F1> <Plug>gen_algorithmSearchAlgorithm
+  autocmd FileType c,cpp,python,java 
+	\ nmap <silent> <F2> <Plug>gen_algorithmRenameAlgorithm
+  autocmd FileType c,cpp,python,java 
+	\ nmap <silent> <F3> <Plug>gen_algorithmRemoveAlgorithm
+  autocmd FileType c,cpp,python,java 
+	\ nmap <silent> <F4> <Plug>gen_algorithmDisplayAlgorithm
+augroup END
 
 " ycm-core/YouCompleteMe
 
@@ -328,7 +359,7 @@ nnoremap <silent> <localleader>p
       \ <C-w>:sleep 200m<CR>git commit -m "modify <C-w>"#"<CR>
       \ <C-w>:sleep 200m<CR>git push -u origin main<CR>
       \ <C-w>:sleep 5<CR>2418942810@qq.com<CR>
-      \ <C-w>:sleep 5<CR>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<CR>
+      \ <C-w>:sleep 5<CR>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<CR>
 
 " 对选择一个单词的命令 viw 进行map。
 nnoremap <space> viw
@@ -375,6 +406,13 @@ iabbrev ccopy Copyright 2021 corgitao, all rights reserved.
 " }}}
 
 " filetype-specific settings ------------------------------------------- {{{
+
+augroup filetype_man
+  autocmd!
+  autocmd FileType man 
+        \ setlocal number           |
+        \ setlocal relativenumber   |
+augroup END
 
 augroup filetype_vim
   autocmd!
