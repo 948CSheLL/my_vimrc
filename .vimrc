@@ -48,6 +48,9 @@ filetype plugin indent on    " required
 
 " plugin config ----------------------------------------------- {{{
 
+" 'puremourning/vimspector'
+let g:vimspector_enable_mappings = 'HUMAN'
+
 " gen_common_code configuration
 " except '|'
 let g:gcc_keyboard_ban_list = ['<BS>', '<TAB>', '<CR>', '<SPACE>', ]
@@ -67,7 +70,12 @@ let g:gcc_exchange_algorithm_path = '<Leader>5'
 let g:gcc_find_file = '<Leader>6'
 let g:gcc_release_key_board = '<Leader>7'
 let g:gcc_back_last_pos = '<Leader>8'
+let g:gcc_paste_algorithm = '<Leader>9'
 let g:gcc_comfirm_or_continue = '$'
+let g:gcc_echo_local_server_port = '9497'
+let g:gcc_echo_local_server_filename = 'tmp9497'
+let g:gcc_echo_remote_server_host = '82.156.35.172'
+let g:gcc_echo_remote_server_port = '9497'
 
 " ycm-core/YouCompleteMe
 
@@ -352,7 +360,7 @@ nnoremap <silent> <localleader>p
       \ <C-w>:sleep 200m<CR>git commit -m "modify <C-w>"#"<CR>
       \ <C-w>:sleep 200m<CR>git push -u origin main<CR>
       \ <C-w>:sleep 5<CR>2418942810@qq.com<CR>
-      \ <C-w>:sleep 5<CR>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<CR>
+      \ <C-w>:sleep 5<CR>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<CR>
 
 " 对选择一个单词的命令 viw 进行map。
 nnoremap <space> viw
