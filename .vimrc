@@ -404,7 +404,7 @@ nnoremap <silent> <localleader>p
       \ <C-w>:sleep 200m<CR>git commit -m "modify <C-w>"#"<CR>
       \ <C-w>:sleep 200m<CR>git push -u origin main<CR>
       \ <C-w>:sleep 5<CR>2418942810@qq.com<CR>
-      \ <C-w>:sleep 5<CR>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<CR>
+      \ <C-w>:sleep 5<CR>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<CR>
 
 " 对选择一个单词的命令 viw 进行map。
 nnoremap <space> viw
