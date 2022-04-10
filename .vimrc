@@ -22,6 +22,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" code formatter
+Plugin 'vim-autoformat/vim-autoformat'
+
 " 括号自动补全
 Plugin 'jiangmiao/auto-pairs'
 
@@ -38,6 +41,7 @@ Plugin 'rdnetto/YCM-Generator'
 Plugin 'tpope/vim-unimpaired'
 
 " 配置vim debugger
+" 在下载adapter 的时候一定要确保执行成功，不然按F5 没有用
 Plugin 'puremourning/vimspector'
 
 " All of your Plugins must be added before the following line
@@ -48,8 +52,48 @@ filetype plugin indent on    " required
 
 " plugin config ----------------------------------------------- {{{
 
+" 'vim-autoformat/vim-autoformat'
+" 需要下载相关语言的formatter。
+" 如果需要对C 的代码进行format，ubuntu 系统需要apt install 
+" clang-format 。
+ 
+" 下面配置格式化快捷键
+nnoremap <Leader>af :<C-u>Autoformat<CR>
+
+" vim-autoformat 会在没有检测到相关语言的formatter 的情况
+" 下执行默认的format，下面三个变量是将默认format 行为关闭
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
 " 'puremourning/vimspector'
-let g:vimspector_enable_mappings = 'HUMAN'
+" 关闭debugger
+nnoremap <Leader>cd :<C-u>VimspectorReset<CR>
+" 由于HUMAN 默认映射有的不可用，所以给他改改，下面的映射
+" 上一行的注释是HUMAN 的原始映射。
+" let g:vimspector_enable_mappings = 'HUMAN'
+" <leader>F9	<Plug>VimspectorToggleConditionalBreakpoint	Toggle conditional line breakpoint or logpoint on the current line.
+nmap <Leader>F9 <Plug>VimspectorToggleConditionalBreakpoint
+" <leader>F8	<Plug>VimspectorRunToCursor	                Run to Cursor
+nmap <Leader>F8 <Plug>VimspectorRunToCursor 
+" F3	<Plug>VimspectorStop	                              Stop debugging.
+nmap <F1> <Plug>VimspectorStop
+" F4	<Plug>VimspectorRestart	                            Restart debugging with the same configuration.
+nmap <F2> <Plug>VimspectorRestart
+" F5	<Plug>VimspectorContinue	                          When debugging, continue. Otherwise start debugging.
+nmap <F3> <Plug>VimspectorContinue
+" F10	<Plug>VimspectorStepOver	                          Step Over
+nmap <F4> <Plug>VimspectorStepOver
+" F11	<Plug>VimspectorStepInto	                          Step Into
+nmap <F5> <Plug>VimspectorStepInto
+" F12	<Plug>VimspectorStepOut	                            Step out of current function scope
+nmap <F6> <Plug>VimspectorStepOut
+" F6	<Plug>VimspectorPause	                              Pause debuggee.
+nmap <F7> <Plug>VimspectorPause
+" F8	<Plug>VimspectorAddFunctionBreakpoint	              Add a function breakpoint for the expression under cursor
+nmap <F8> <Plug>VimspectorAddFunctionBreakpoint
+" F9	<Plug>VimspectorToggleBreakpoint	                  Toggle line breakpoint on the current line.
+nmap <F9> <Plug>VimspectorToggleBreakpoint
 
 " gen_common_code configuration
 " except '|'
