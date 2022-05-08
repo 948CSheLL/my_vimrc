@@ -251,7 +251,7 @@ nnoremap <silent> <Leader>yec :<C-u>YcmGenerateConfig<CR>
 
 " functions -------------------------------------------------- {{{
 
-function! g:SetKeywordprg(type)
+function! g:SetKeywordprg(type) abort
   if a:type ==# 1
     let keyword = expand('<cword>')
     let tmp = split(system('man -k ' . keyword . ' | grep -e "^' . 
@@ -283,6 +283,49 @@ function! g:SetKeywordprg(type)
     endif
   endif
   execute '' . g:man_page_list[g:man_page_idx]
+endfunction
+
+function! g:FindMyFilePath(filename) abort
+  let make_file_path = fnamemodify(bufname("%"), ":p:h")
+  while empty(findfile(make_file_path . '/' . a:filename))
+    if make_file_path ==# '/'
+      echoerr 'Don''t find ' . a:filename . '.'
+      return ''
+    endif
+    let make_file_path = fnamemodify(make_file_path, ":h")
+  endwhile
+  return make_file_path
+endfunction
+
+function! g:OpenMakeFile() abort
+  let save_cwd = getcwd()
+  let make_file_path = g:FindMyFilePath('Makefile')
+  call chdir(make_file_path)
+  execute 'vsplit ' . make_file_path . '/Makefile'
+  call chdir(save_cwd)
+endfunction
+
+function! g:CompileProgram() abort
+  let save_cwd = getcwd()
+  let make_file_path = g:FindMyFilePath('Makefile')
+  call chdir(make_file_path)
+  make
+  call chdir(save_cwd)
+endfunction
+
+function! g:RunProgram() abort
+  let filename = split(bufname("%"), '\.')[0]
+  let my_file_path = 
+        \ g:FindMyFilePath(filename)
+  let user_input = input('Do you want to execute ''' 
+        \ . my_file_path . '/' . filename 
+        \ . ''' ? [default: yes]: ')
+  if user_input !=? 'y'
+        \ && user_input !=? 'yes'
+        \ && !empty(user_input)
+    return
+  endif
+  execute 'terminal ' . my_file_path . '/' . filename
 endfunction
 
 " }}}
@@ -395,6 +438,9 @@ set shiftround
 
 " mappings -------------------------------------------------------- {{{
 
+" 快速关闭缓冲
+nnoremap <Leader><Leader> ZZ
+
 " 配置git
 nnoremap <silent> <localleader>p
       \ :<C-u>w<CR>
@@ -486,6 +532,20 @@ augroup filetype_c_cpp
   " c，cpp 的keywordprg 选项需要使用man page，而不是vim 的help
   autocmd FileType c,cpp 
         \ nnoremap K :<C-u>call g:SetKeywordprg(1)<CR>
+  " 配置编译运行
+  " 配置快速打开Makefile
+  autocmd FileType c,cpp 
+        \ nnoremap <silent> <Leader>open :<C-u>call g:OpenMakeFile()<CR>
+  " 配置快速编译Makefile
+  autocmd FileType c,cpp 
+        \ nnoremap <silent> <Leader>make :<C-u>call g:CompileProgram()<CR>
+  " 配置运行当前文件
+  autocmd FileType c,cpp 
+        \ nnoremap <silent> <Leader>run :<C-u>call g:RunProgram()<CR>
+  " 配置快速运行当前文件
+  autocmd FileType c,cpp 
+        \ nnoremap <silent> <Leader>crun :<C-u>call g:CompileProgram()<CR>
+        \ :<C-u>call g:RunProgram()<CR>
 augroup END
 
 " }}}
