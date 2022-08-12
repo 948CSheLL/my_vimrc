@@ -106,20 +106,11 @@ let g:gcc_keyboard_pick_list = [
       \ '1', '!', '2', '@', '3', '#', '4', '$', '5', '%', '6', '^', '7', '&', 
       \ '\', ';', ':', '''', '"', ',', '<', '.', '>', '/', '?', '`', '~', 
       \ '8', '*', '9', '(', '0', ')', '-', '_', '=', '+', ]
-let g:gcc_search_algorithm = '<Leader>1'
-let g:gcc_rename_algorithm = '<Leader>2'
-let g:gcc_remove_algorithm = '<Leader>3'
-let g:gcc_display_algorithm = '<Leader>4'
-let g:gcc_exchange_algorithm_path = '<Leader>5'
-let g:gcc_find_file = '<Leader>6'
+let g:gcc_comfirm_or_continue = '$'
+let g:gcc_find_file = '<Leader>4'
 let g:gcc_release_key_board = '<Leader>7'
 let g:gcc_back_last_pos = '<Leader>8'
 let g:gcc_paste_algorithm = '<Leader>9'
-let g:gcc_comfirm_or_continue = '$'
-let g:gcc_echo_local_server_port = '9497'
-let g:gcc_echo_local_server_filename = 'tmp9497'
-let g:gcc_echo_remote_server_host = '82.156.35.172'
-let g:gcc_echo_remote_server_port = '9497'
 
 " ycm-core/YouCompleteMe
 
@@ -239,7 +230,14 @@ nnoremap <leader>fi :<C-u>YcmCompleter FixIt<CR>
 nnoremap <leader>rn :<C-u>execute 'YcmCompleter RefactorRename '.input('refactor "'.expand('<cword>').'" to:')<CR>
 " 回显光标下的变量或方法的类型，以及不同的派生类型。
 nnoremap <leader>tp :<C-u>YcmCompleter GetType<CR>
-
+" 查询光标下的symbol
+" Supported in filetypes: c, cpp, objc, objcpp, cuda
+" 
+" The GoToSymbol <symbol query> subcommand
+" Finds the definition of all symbols matching a specified string. Note that this does not use any sort of smart/fuzzy matching. However, an interactive symbol search is also available.
+" 
+" Supported in filetypes: c, cpp, objc, objcpp, cuda, cs, java, javascript, python, typescript
+nnoremap <leader>gs :<C-u>execute 'YcmCompleter GoToSymbol ' . expand('<cword>')<CR>
 
 " rdnetto/YCM-Generator
 " 配置生成.ycm_extra_conf.py 的命令
@@ -439,7 +437,7 @@ set shiftround
 " mappings -------------------------------------------------------- {{{
 
 " 快速关闭缓冲
-nnoremap <Leader><Leader> ZZ
+nnoremap <Leader><Leader> :<C-u>bd %<CR>
 
 " 配置git
 nnoremap <silent> <localleader>p
@@ -450,7 +448,7 @@ nnoremap <silent> <localleader>p
       \ <C-w>:sleep 200m<CR>git commit -m "modify <C-w>"#"<CR>
       \ <C-w>:sleep 200m<CR>git push -u origin main<CR>
       \ <C-w>:sleep 5<CR>2418942810@qq.com<CR>
-      \ <C-w>:sleep 5<CR>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<CR>
+      \ <C-w>:sleep 5<CR>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<CR>
 
 " 对选择一个单词的命令 viw 进行map。
 nnoremap <space> viw
