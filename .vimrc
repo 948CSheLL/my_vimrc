@@ -44,6 +44,14 @@ Plugin 'tpope/vim-unimpaired'
 " 在下载adapter 的时候一定要确保执行成功，不然按F5 没有用
 Plugin 'puremourning/vimspector'
 
+" vim背景颜色主题
+Plugin 'flazz/vim-colorschemes'
+
+" 循环遍历本地颜色主题
+" :SCROLL 循环遍历每一个主题
+" 找到合适的通过在vimrc 中的colorscheme colorName来设置
+Plugin 'vim-scripts/ScrollColors'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -343,6 +351,15 @@ let maplocalleader = 'g'
 " }}}
 
 " basic settings ------------------------------------------------- {{{ 
+
+" 设置颜色背景
+" lightning
+" PaperColor
+" summerfruit256
+colorscheme summerfruit256
+
+" 设置浏览颜色背景的快捷键
+nnoremap <silent> <Leader>b :<C-u>SCROLL<CR>
 
 " fileencoding选项设置此缓冲区所在文件的字符编码。
 " 如果 'fileencoding' 不同于 'encoding'，写文件时需要进行转换。读文件时
