@@ -395,6 +395,7 @@ set scrolloff=5
 set nobackup
 
 " 打开行高亮
+" yoc 是开关
 set cursorline
 
 " 设置持久撤销选项
