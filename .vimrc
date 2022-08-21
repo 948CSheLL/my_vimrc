@@ -394,6 +394,9 @@ set scrolloff=5
 " 不启动备份，如果开启，会生成一个后缀是波浪线的文件
 set nobackup
 
+" 打开行高亮
+set cursorline
+
 " 设置持久撤销选项
 if has('persistent_undo')
   " 开启持久撤销，即使是保存了文件，也能撤销
@@ -465,7 +468,7 @@ nnoremap <silent> <localleader>p
       \ <C-w>:sleep 200m<CR>git commit -m "modify <C-w>"#"<CR>
       \ <C-w>:sleep 200m<CR>git push -u origin main<CR>
       \ <C-w>:sleep 5<CR>2418942810@qq.com<CR>
-      \ <C-w>:sleep 5<CR>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<CR>
+      \ <C-w>:sleep 5<CR>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<CR>
 
 " 对选择一个单词的命令 viw 进行map。
 nnoremap <space> viw
